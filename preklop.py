@@ -18,6 +18,10 @@ def main(ip: str = "", vlan: str = ""):
        preklop(ip,vlan,username,password)
     else:
        print(f"Not a valid IPv4 address: {ip} .")
+       now = str(datetime.now())
+       log = now + ' Not a valid IPv4 address: ' + ip
+       f.write('\n')
+       f.write(log)
 
 def check_ip(ip):
     regex_pattern = r'^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
