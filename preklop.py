@@ -36,7 +36,7 @@ def preklop(ip, vlan, username, password):
    try:
       ssh_client.connect(hostname=ip, username=username, password=password, banner_timeout=60)
       commands = [
-         f'/interface vlan set [find name="TV"] vlan-id={vlan}','/interface vlan set [find name="IPTV"] vlan-id={vlan}','quit'
+         f'/interface vlan set [find name="TV"] vlan-id={vlan}','/interface vlan set [find name="IPTV"] vlan-id={vlan}','quit'   
       ]
       for i in commands:
          output = ssh_client.exec_command(i)
@@ -46,23 +46,23 @@ def preklop(ip, vlan, username, password):
       f3.write('\n')
       f3.write(log)
    except paramiko.SSHException as e:
-        print(str(e))
-        now = str(datetime.now())
-        log = now + ' cant reach mk ' + ip + ' ' + str(e)
-        f2.write('\n')
-        f2.write(log)
+      print(str(e))
+      now = str(datetime.now())
+      log = now + ' cant reach mk ' + ip + ' ' + str(e)
+      f2.write('\n')
+      f2.write(log)
    except paramiko.BadHostKeyException as e:
-        print(str(e))
-        now = str(datetime.now())
-        log = now + ' cant reach mk ' + ip + ' ' + str(e)
-        f2.write('\n')
-        f2.write(log)
+      print(str(e))
+      now = str(datetime.now())
+      log = now + ' cant reach mk ' + ip + ' ' + str(e)
+      f2.write('\n')
+      f2.write(log)
    except paramiko.BadAuthenticationType as e:
-        print(str(e))
-        now = str(datetime.now())
-        log = now + ' bad credentials ' + ip + ' ' + str(e)
-        f2.write('\n')
-        f2.write(log)
+      print(str(e))
+      now = str(datetime.now())
+      log = now + ' bad credentials ' + ip + ' ' + str(e)
+      f2.write('\n')
+      f2.write(log)
    finally:
       ssh_client.close()
 
