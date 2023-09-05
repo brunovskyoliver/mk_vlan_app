@@ -9,13 +9,16 @@ load_dotenv()
 
 username = os.getenv('username')
 password = os.getenv('password')
+username1 = os.getenv('username1')
 f = open("not_valid_addresses.txt", "a")
 f2 = open("not_connected_mks.txt", "a")
 f3 = open("successful_vlan_change.txt", "a")
+tried = 0
 
 def main(ip: str = "", vlan: str = ""):
     if check_ip(ip):
        preklop(ip,vlan,username,password)
+       #verify(ip,vlan,username,password)
     else:
        print(f"Not a valid IPv4 address: {ip} .")
        now = str(datetime.now())
@@ -31,6 +34,7 @@ def check_ip(ip):
        return False
 
 def preklop(ip, vlan, username, password):
+   global tried
    ssh_client = paramiko.SSHClient()
    ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
    try:
@@ -46,18 +50,27 @@ def preklop(ip, vlan, username, password):
       f3.write('\n')
       f3.write(log)
    except paramiko.SSHException as e:
+      if tried == 0:
+         tried += 1
+         preklop(ip,vlan,username1,password)
       print(str(e))
       now = str(datetime.now())
       log = now + ' cant reach mk ' + ip + ' ' + str(e)
       f2.write('\n')
       f2.write(log)
    except paramiko.BadHostKeyException as e:
+      if tried == 0:
+         tried += 1
+         preklop(ip,vlan,username1,password)
       print(str(e))
       now = str(datetime.now())
       log = now + ' cant reach mk ' + ip + ' ' + str(e)
       f2.write('\n')
       f2.write(log)
    except paramiko.BadAuthenticationType as e:
+      if tried == 0:
+         tried += 1
+         preklop(ip,vlan,username1,password)
       print(str(e))
       now = str(datetime.now())
       log = now + ' bad credentials ' + ip + ' ' + str(e)
